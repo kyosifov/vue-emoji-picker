@@ -20,6 +20,7 @@
 
 <script>
   import emojis from '../emojis';
+  import { escapeRegex } from '../utils/helpers';
 
   export default {
     props: {
@@ -54,7 +55,7 @@
             obj[category] = {};
 
             for (const emoji in this.emojiTable[category]) {
-              if (new RegExp(`.*${this.search}.*`).test(emoji)) {
+              if (new RegExp(`.*${escapeRegex(this.search)}.*`).test(emoji)) {
                 obj[category][emoji] = this.emojiTable[category][emoji];
               }
             }
@@ -86,7 +87,7 @@
         if (this.display.visible === true && e.keyCode === 27) {
           this.display.visible = false;
         }
-      },
+      }
     },
     mounted() {
       document.addEventListener('keyup', this.escape);
