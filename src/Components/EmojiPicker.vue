@@ -35,6 +35,11 @@
           return emojis
         },
       },
+      clickOutsideReferenceElement: {
+        type: HTMLElement,
+        required: false,
+        default: null
+      }
     },
     data() {
       return {
@@ -97,6 +102,14 @@
 
           const bubble = binding.modifiers.bubble
           const handler = (e) => {
+            if (
+                vNode.clickOutsideReferenceElement &&
+                (!vNode.clickOutsideReferenceElement.contains(e.target) && vNode.clickOutsideReferenceElement !== e.target)
+            ) {
+              binding.value(e)
+              return
+            }
+
             if (bubble || (! el.contains(e.target) && el !== e.target)) {
               binding.value(e)
             }
